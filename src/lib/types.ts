@@ -70,6 +70,27 @@ export interface ClientConfig {
   }>
   highlights: string[] // short bullet points, e.g. "Beachfront seating"
 
+  menu?: Array<{
+    category: string
+    items: Array<{
+      name: string
+      price?: string
+      description?: string
+    }>
+  }>
+
+  /** Absolute image URLs rendered as a responsive grid. */
+  gallery?: string[]
+
+  /**
+   * Owner-supplied testimonials shown as a social-proof strip.
+   * These are NOT scraped Google reviews — do not add aggregateRating to JSON-LD.
+   */
+  reviewQuotes?: Array<{
+    quote: string
+    author: string
+  }>
+
   // ----- SEO -----
   seo: {
     title: string // <title>

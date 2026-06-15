@@ -5,12 +5,10 @@ import { BASE_URL } from '@/lib/config'
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    { url: BASE_URL, changeFrequency: 'weekly', priority: 1 },
-    ...allClients().map((c) => ({
-      url: `${BASE_URL}/${c.slug}`,
-      changeFrequency: 'monthly' as const,
-      priority: 0.8,
-    })),
-  ]
+  // Root / is intentionally excluded — it's a private placeholder, not public content.
+  return allClients().map((c) => ({
+    url: `${BASE_URL}/${c.slug}`,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
 }

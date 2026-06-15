@@ -1,20 +1,26 @@
-// src/app/page.tsx — simple index listing the live client sites.
-import Link from 'next/link'
-import { allClients } from '@/lib/clients'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'LocalSite',
+  robots: { index: false, follow: false },
+}
 
 export default function Home() {
-  const clients = allClients()
   return (
-    <main style={{ fontFamily: 'system-ui, sans-serif', maxWidth: 640, margin: '0 auto', padding: '3rem 1.25rem' }}>
-      <h1>LocalSite</h1>
-      <p style={{ color: '#666' }}>Landing pages, built fast for local businesses.</p>
-      <ul>
-        {clients.map((c) => (
-          <li key={c.slug} style={{ margin: '0.5rem 0' }}>
-            <Link href={`/${c.slug}`}>{c.name}</Link> — {c.locality}
-          </li>
-        ))}
-      </ul>
+    <main
+      style={{
+        fontFamily: 'system-ui, sans-serif',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        color: '#cbd5e1',
+        textAlign: 'center',
+      }}
+    >
+      <span style={{ fontSize: '1rem', fontWeight: 600, letterSpacing: '0.08em' }}>
+        LocalSite
+      </span>
     </main>
   )
 }

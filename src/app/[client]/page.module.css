@@ -1,0 +1,299 @@
+/* --accent is injected as an inline CSS variable on .page by the server component */
+
+/* ── Page shell ─────────────────────────────────────────────── */
+.page {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #1e293b;
+  background: #fff;
+  padding-bottom: 5rem; /* space for sticky CTA on mobile */
+}
+@media (min-width: 641px) {
+  .page { padding-bottom: 0; }
+}
+
+/* ── Hero ───────────────────────────────────────────────────── */
+.hero {
+  padding: 4rem 1.5rem 2.5rem;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroLabel {
+  display: block;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.heroHeadline {
+  font-size: clamp(2rem, 5.5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+  color: #0f172a;
+}
+
+.heroSubhead {
+  font-size: 1.1rem;
+  color: #64748b;
+  line-height: 1.65;
+  max-width: 540px;
+  margin: 0 auto 2rem;
+}
+
+/* ── Hero image ─────────────────────────────────────────────── */
+.heroImageWrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2.5rem;
+}
+
+/* ── Highlights chips ───────────────────────────────────────── */
+.highlights {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2.5rem;
+}
+
+.chipList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.chip {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+}
+
+/* ── Generic section ────────────────────────────────────────── */
+.section {
+  max-width: 680px;
+  margin: 0 auto 3rem;
+  padding: 0 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.25rem;
+}
+
+.sectionBody {
+  color: #475569;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* ── Menu ───────────────────────────────────────────────────── */
+.menuCategory {
+  margin-bottom: 2rem;
+}
+
+.menuCategoryTitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent);
+}
+
+.menuItemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menuItem {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.menuItemName {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.menuItemPrice {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.menuItemDesc {
+  grid-column: 1 / -1;
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0.2rem 0 0;
+}
+
+/* ── Gallery ────────────────────────────────────────────────── */
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.625rem;
+}
+@media (min-width: 480px) {
+  .galleryGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.galleryItem {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+/* ── Reviews band ───────────────────────────────────────────── */
+.reviewsBand {
+  background: #f8fafc;
+  padding: 3rem 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.reviewsInner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.reviewsGrid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+@media (min-width: 560px) {
+  .reviewsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.reviewCard {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.reviewQuote {
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.65;
+  margin: 0 0 0.875rem;
+}
+
+.reviewAuthor {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Map ─────────────────────────────────────────────────────── */
+.mapFrame {
+  width: 100%;
+  height: 260px;
+  border: none;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.mapLink {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.mapLink:hover { text-decoration: underline; }
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.footerAddress { margin: 0 0 0.4rem; }
+.footerHours   { margin: 0 0 0.25rem; }
+
+.footerLinks {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.875rem;
+}
+
+.footerLink {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+.footerLink:hover { text-decoration: underline; }
+
+/* ── Sticky mobile CTA ───────────────────────────────────────── */
+.stickyBar { display: none; }
+
+@media (max-width: 640px) {
+  .stickyBar {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .stickyBarBtn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+  }
+}

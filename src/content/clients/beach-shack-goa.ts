@@ -57,6 +57,56 @@ export const beachShackGoa: ClientConfig = {
     'Sunset bookings on WhatsApp',
   ],
 
+  menu: [
+    {
+      category: 'Fresh Catch',
+      items: [
+        {
+          name: 'Grilled Pomfret',
+          price: '₹650',
+          description: 'Whole fish, coastal masala, served with rice and sol kadi.',
+        },
+        {
+          name: 'Butter-Garlic Prawns',
+          price: '₹480',
+          description: 'Tiger prawns, house butter-garlic sauce, charred lemon.',
+        },
+        {
+          name: 'Fish Thali',
+          price: '₹320',
+          description: "Daily catch, rice, dal, sabzi, pickle, pappad — the full Goan meal.",
+        },
+      ],
+    },
+    {
+      category: 'Drinks',
+      items: [
+        { name: 'Kingfisher Beer', price: '₹180' },
+        { name: 'Fresh Lime Soda', price: '₹80' },
+        { name: 'Coconut Water', price: '₹60' },
+      ],
+    },
+  ],
+
+  // Placeholder gallery — replace with real hosted images before going live
+  gallery: [
+    'https://picsum.photos/seed/palolem-1/800/600',
+    'https://picsum.photos/seed/palolem-2/800/600',
+    'https://picsum.photos/seed/palolem-3/800/600',
+  ],
+
+  // Owner-supplied testimonials — NOT Google reviews. Do not add aggregateRating to JSON-LD.
+  reviewQuotes: [
+    {
+      quote: 'Best grilled fish I had in Goa. The butter-garlic prawns were incredible — we came back three nights in a row.',
+      author: 'James T., London',
+    },
+    {
+      quote: 'Magical sunset spot. The fish thali is honest, generous, and exactly what it should be. No tourist-menu nonsense.',
+      author: 'Priya S., Bangalore',
+    },
+  ],
+
   seo: {
     title: 'Banyan Beach Shack — Seafood Restaurant on Palolem Beach, Goa',
     description:

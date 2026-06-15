@@ -1,22 +1,18 @@
-// src/app/[client]/page.tsx
-//
-// The landing page. One static page per client, generated at build time from
-// its config. No runtime LLM, no DB — pure static output for speed + SEO.
-
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getClient, allSlugs } from '@/lib/clients'
 import { buildLocalBusinessJsonLd } from '@/lib/structured-data'
+import { BASE_URL, DEFAULT_ACCENT } from '@/lib/config'
+import { getBookingCta } from '@/lib/booking'
 import BookingCTA from '@/components/BookingCTA'
 import HeroImage from '@/components/HeroImage'
-import { BASE_URL, DEFAULT_ACCENT } from '@/lib/config'
+import styles from './page.module.css'
 
-// Pre-render every client at build time.
 export function generateStaticParams() {
   return allSlugs().map((client) => ({ client }))
 }
 
-// Per-client SEO metadata — title, description, Open Graph.
 export async function generateMetadata({
   params,
 }: {
@@ -58,110 +54,190 @@ export default async function LandingPage({
   const accent = c.accent ?? DEFAULT_ACCENT
   const url = `${BASE_URL}/${c.slug}`
   const jsonLd = buildLocalBusinessJsonLd(c, url)
+  const cta = getBookingCta(c)
 
   return (
-    <main style={{ fontFamily: 'system-ui, sans-serif', color: '#1a1a1a' }}>
-      {/* Structured data for local SEO */}
+    <main
+      className={styles.page}
+      style={{ '--accent': accent } as React.CSSProperties}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero */}
-      <section
-        style={{
-          padding: '3.5rem 1.25rem 2.5rem',
-          maxWidth: 720,
-          margin: '0 auto',
-          textAlign: 'center',
-        }}
-      >
-        <p style={{ color: accent, fontWeight: 600, letterSpacing: 0.4, margin: 0 }}>
-          {c.name} · {c.locality}
-        </p>
-        <h1 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.6rem)', lineHeight: 1.15, margin: '0.75rem 0' }}>
-          {c.hero.headline}
-        </h1>
-        <p style={{ fontSize: '1.1rem', color: '#444', maxWidth: 560, margin: '0 auto 1.5rem' }}>
-          {c.hero.subhead}
-        </p>
-        <BookingCTA client={c} accent={accent} />
+      {/* ── Hero ──────────────────────────────────────────── */}
+      <section className={styles.hero}>
+        <span className={styles.heroLabel}>{c.name} · {c.locality}</span>
+        <h1 className={styles.heroHeadline}>{c.hero.headline}</h1>
+        <p className={styles.heroSubhead}>{c.hero.subhead}</p>
+        <BookingCTA client={c} />
       </section>
 
+      {/* ── Hero image ────────────────────────────────────── */}
       {c.seo.ogImage && (
-        <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 1.25rem 2rem' }}>
+        <div className={styles.heroImageWrap}>
           <HeroImage src={c.seo.ogImage} alt={c.name} />
         </div>
       )}
 
-      {/* Highlights */}
+      {/* ── Highlights ────────────────────────────────────── */}
       {c.highlights.length > 0 && (
-        <section style={{ maxWidth: 720, margin: '0 auto', padding: '0 1.25rem' }}>
-          <ul
-            style={{
-              listStyle: 'none',
-              padding: 0,
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '0.5rem',
-              justifyContent: 'center',
-            }}
-          >
+        <section className={styles.highlights}>
+          <ul className={styles.chipList}>
             {c.highlights.map((h) => (
-              <li
-                key={h}
-                style={{
-                  background: '#f3f4f6',
-                  borderRadius: 999,
-                  padding: '0.4rem 0.9rem',
-                  fontSize: '0.9rem',
-                }}
-              >
-                {h}
-              </li>
+              <li key={h} className={styles.chip}>{h}</li>
             ))}
           </ul>
         </section>
       )}
 
-      {/* Content sections */}
-      <div style={{ maxWidth: 680, margin: '0 auto', padding: '2.5rem 1.25rem' }}>
-        {c.sections.map((s) => (
-          <section key={s.title} style={{ marginBottom: '2rem' }}>
-            <h2 style={{ fontSize: '1.3rem', marginBottom: '0.5rem' }}>{s.title}</h2>
-            <p style={{ color: '#444', lineHeight: 1.6, margin: 0 }}>{s.body}</p>
-          </section>
-        ))}
-
-        {/* Contact / hours footer */}
-        <footer style={{ borderTop: '1px solid #eee', paddingTop: '1.5rem', color: '#555', fontSize: '0.95rem' }}>
-          {c.address && (
-            <p style={{ margin: '0 0 0.5rem' }}>
-              {[c.address.street, c.address.locality, c.address.region, c.address.postalCode]
-                .filter(Boolean)
-                .join(', ')}
-            </p>
-          )}
-          {c.hours?.map((h) => (
-            <p key={h.days} style={{ margin: '0 0 0.25rem' }}>
-              {h.days}: {h.opens}–{h.closes}
-            </p>
+      {/* ── Menu ──────────────────────────────────────────── */}
+      {c.menu && c.menu.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Menu</h2>
+          {c.menu.map((cat) => (
+            <div key={cat.category} className={styles.menuCategory}>
+              <h3 className={styles.menuCategoryTitle}>{cat.category}</h3>
+              <ul className={styles.menuItemList}>
+                {cat.items.map((item) => (
+                  <li key={item.name} className={styles.menuItem}>
+                    <span className={styles.menuItemName}>{item.name}</span>
+                    {item.price && (
+                      <span className={styles.menuItemPrice}>{item.price}</span>
+                    )}
+                    {item.description && (
+                      <p className={styles.menuItemDesc}>{item.description}</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '0.75rem' }}>
-            {c.phone && <a href={`tel:${c.phone}`} style={{ color: accent }}>Call</a>}
-            {c.instagram && (
-              <a href={`https://instagram.com/${c.instagram}`} style={{ color: accent }} target="_blank" rel="noopener noreferrer">
-                Instagram
-              </a>
-            )}
-            {c.googleReviewUrl && (
-              <a href={c.googleReviewUrl} style={{ color: accent }} target="_blank" rel="noopener noreferrer">
-                Reviews
-              </a>
-            )}
+        </section>
+      )}
+
+      {/* ── Gallery ───────────────────────────────────────── */}
+      {c.gallery && c.gallery.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Gallery</h2>
+          <div className={styles.galleryGrid}>
+            {c.gallery.map((src, i) => (
+              <div key={i} className={styles.galleryItem}>
+                <Image
+                  src={src}
+                  alt={`${c.name} — photo ${i + 1}`}
+                  fill
+                  sizes="(max-width: 480px) 50vw, 33vw"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+            ))}
           </div>
-        </footer>
-      </div>
+        </section>
+      )}
+
+      {/* ── Content sections ──────────────────────────────── */}
+      {c.sections.map((s) => (
+        <section key={s.title} className={styles.section}>
+          <h2 className={styles.sectionTitle}>{s.title}</h2>
+          <p className={styles.sectionBody}>{s.body}</p>
+        </section>
+      ))}
+
+      {/* ── Reviews ───────────────────────────────────────── */}
+      {/* reviewQuotes are owner-supplied testimonials — NOT scraped Google reviews.
+          JSON-LD aggregateRating is deliberately omitted. See structured-data.ts. */}
+      {c.reviewQuotes && c.reviewQuotes.length > 0 && (
+        <div className={styles.reviewsBand}>
+          <div className={styles.reviewsInner}>
+            <h2 className={styles.sectionTitle}>What guests say</h2>
+            <div className={styles.reviewsGrid}>
+              {c.reviewQuotes.map((r, i) => (
+                <blockquote key={i} className={styles.reviewCard}>
+                  <p className={styles.reviewQuote}>"{r.quote}"</p>
+                  <footer className={styles.reviewAuthor}>— {r.author}</footer>
+                </blockquote>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Map ───────────────────────────────────────────── */}
+      {c.address?.lat != null && c.address?.lng != null && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Location</h2>
+          <iframe
+            src={`https://www.openstreetmap.org/export/embed.html?bbox=${c.address.lng - 0.005},${c.address.lat - 0.003},${c.address.lng + 0.005},${c.address.lat + 0.003}&layer=mapnik&marker=${c.address.lat},${c.address.lng}`}
+            className={styles.mapFrame}
+            title={`Map — ${c.name}`}
+          />
+          <a
+            href={`https://www.openstreetmap.org/?mlat=${c.address.lat}&mlon=${c.address.lng}#map=17/${c.address.lat}/${c.address.lng}`}
+            className={styles.mapLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open in maps ↗
+          </a>
+        </section>
+      )}
+
+      {/* ── Footer ────────────────────────────────────────── */}
+      <footer className={styles.footer}>
+        {c.address && (
+          <p className={styles.footerAddress}>
+            {[c.address.street, c.address.locality, c.address.region, c.address.postalCode]
+              .filter(Boolean)
+              .join(', ')}
+          </p>
+        )}
+        {c.hours?.map((h) => (
+          <p key={h.days} className={styles.footerHours}>
+            {h.days}: {h.opens}–{h.closes}
+          </p>
+        ))}
+        <div className={styles.footerLinks}>
+          {c.phone && (
+            <a href={`tel:${c.phone}`} className={styles.footerLink}>Call</a>
+          )}
+          {c.instagram && (
+            <a
+              href={`https://instagram.com/${c.instagram}`}
+              className={styles.footerLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+          )}
+          {c.googleReviewUrl && (
+            <a
+              href={c.googleReviewUrl}
+              className={styles.footerLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Leave a review
+            </a>
+          )}
+        </div>
+      </footer>
+
+      {/* ── Sticky mobile CTA ─────────────────────────────── */}
+      {cta && (
+        <div className={styles.stickyBar}>
+          <a
+            href={cta.href}
+            className={styles.stickyBarBtn}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {cta.label}
+          </a>
+        </div>
+      )}
     </main>
   )
 }
