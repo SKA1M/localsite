@@ -86,8 +86,13 @@ export default async function LandingPage({
           {c.hero.subhead}
         </p>
         <BookingCTA client={c} accent={accent} />
-        {c.seo.ogImage && <HeroImage src={c.seo.ogImage} alt={c.name} />}
       </section>
+
+      {c.seo.ogImage && (
+        <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 1.25rem 2rem' }}>
+          <HeroImage src={c.seo.ogImage} alt={c.name} />
+        </div>
+      )}
 
       {/* Highlights */}
       {c.highlights.length > 0 && (

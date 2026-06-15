@@ -61,7 +61,7 @@ export const beachShackGoa: ClientConfig = {
     title: 'Banyan Beach Shack — Seafood Restaurant on Palolem Beach, Goa',
     description:
       'Fresh Goan seafood grilled on Palolem Beach. Daily catch, thalis, tandoor, cold beer, and sunset tables. Book on WhatsApp. Open daily 8am–11:30pm.',
-    ogImage: 'https://reviews.yourdomain.com/og/beach-shack-goa.jpg',
+    // ogImage: add an absolute URL once a real photo is available
   },
 
   accent: '#0e7490',
