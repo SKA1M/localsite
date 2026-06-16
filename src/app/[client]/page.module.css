@@ -1,11 +1,21 @@
-/* --accent is injected as an inline CSS variable on .page by the server component */
+/* ────────────────────────────────────────────────────────────
+   WARM COASTAL PALETTE
+   --accent        client brand color (injected inline on .page)
+   --font-display  DM Serif Display, set via next/font on <html>
+
+   Backgrounds:  #FBF6EE cream  /  #F5E9D7 sand  /  #FFF9F0 card
+   Text:         #2C1810 espresso  /  #6B4A28 bark  /  #9A7050 driftwood
+   Borders:      #E8D5BC warm sand
+   Shadows:      rgba(61, 46, 34, …) — warm brown tint, never cold gray
+   ──────────────────────────────────────────────────────────── */
 
 /* ── Page shell ─────────────────────────────────────────────── */
 .page {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #1e293b;
-  background: #fff;
-  padding-bottom: 5rem; /* space for sticky CTA on mobile */
+  color: #2C1810;
+  /* warm golden gradient at the top (hero zone), settling into cream */
+  background: linear-gradient(to bottom, #F5D98A 0px, #FBF6EE 520px) #FBF6EE;
+  padding-bottom: 5rem;
 }
 @media (min-width: 641px) {
   .page { padding-bottom: 0; }
@@ -13,7 +23,7 @@
 
 /* ── Hero ───────────────────────────────────────────────────── */
 .hero {
-  padding: 4rem 1.5rem 2.5rem;
+  padding: 4.5rem 1.5rem 3rem;
   max-width: 760px;
   margin: 0 auto;
   text-align: center;
@@ -22,42 +32,44 @@
 .heroLabel {
   display: block;
   color: var(--accent);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .heroHeadline {
-  font-size: clamp(2rem, 5.5vw, 3.2rem);
-  font-weight: 800;
+  font-family: var(--font-display), Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
   line-height: 1.08;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 0 0 1.25rem;
-  color: #0f172a;
+  color: #2C1810;
 }
 
 .heroSubhead {
   font-size: 1.1rem;
-  color: #64748b;
-  line-height: 1.65;
-  max-width: 540px;
-  margin: 0 auto 2rem;
+  color: #6B4A28;
+  line-height: 1.72;
+  max-width: 520px;
+  margin: 0 auto 2.25rem;
 }
 
 /* ── Hero image ─────────────────────────────────────────────── */
 .heroImageWrap {
   max-width: 760px;
   margin: 0 auto;
-  padding: 0 1.5rem 2.5rem;
+  padding: 0 1.5rem 2.75rem;
 }
 
 /* ── Highlights chips ───────────────────────────────────────── */
 .highlights {
   max-width: 760px;
   margin: 0 auto;
-  padding: 0 1.5rem 2.5rem;
+  padding: 0 1.5rem 2.75rem;
 }
 
 .chipList {
@@ -71,12 +83,13 @@
 }
 
 .chip {
-  background: #f1f5f9;
-  color: #475569;
+  background: #EDE0CA;
+  color: #6B4A28;
   font-size: 0.875rem;
-  font-weight: 500;
-  padding: 0.4rem 1rem;
+  font-weight: 600;
+  padding: 0.45rem 1.1rem;
   border-radius: 999px;
+  letter-spacing: 0.01em;
 }
 
 /* ── Generic section ────────────────────────────────────────── */
@@ -87,16 +100,17 @@
 }
 
 .sectionTitle {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.01em;
-  margin: 0 0 1.25rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  font-size: 1.65rem;
+  color: #2C1810;
+  margin: 0 0 1.1rem;
+  letter-spacing: 0.01em;
 }
 
 .sectionBody {
-  color: #475569;
-  line-height: 1.75;
+  color: #6B4A28;
+  line-height: 1.8;
   margin: 0;
 }
 
@@ -109,11 +123,11 @@
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--accent);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 0 0 0.75rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 1.5px solid var(--accent);
 }
 
 .menuItemList {
@@ -130,14 +144,15 @@
   grid-template-columns: 1fr auto;
   align-items: baseline;
   gap: 0.2rem 1rem;
-  padding: 0.75rem 1rem;
-  background: #f8fafc;
-  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  background: #FFF9F0;
+  border-radius: 12px;
+  border: 1px solid #E8D5BC;
 }
 
 .menuItemName {
   font-weight: 600;
-  color: #1e293b;
+  color: #2C1810;
   font-size: 0.95rem;
 }
 
@@ -151,9 +166,9 @@
 .menuItemDesc {
   grid-column: 1 / -1;
   font-size: 0.85rem;
-  color: #64748b;
-  line-height: 1.5;
-  margin: 0.2rem 0 0;
+  color: #9A7050;
+  line-height: 1.55;
+  margin: 0.25rem 0 0;
 }
 
 /* ── Gallery ────────────────────────────────────────────────── */
@@ -169,14 +184,15 @@
 .galleryItem {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  background: #f1f5f9;
+  background: #EDE0CA;
+  box-shadow: 0 2px 8px rgba(61, 46, 34, 0.12);
 }
 
-/* ── Reviews band ───────────────────────────────────────────── */
+/* ── Reviews band — deeper sand, alternates warmly ──────────── */
 .reviewsBand {
-  background: #f8fafc;
+  background: #F5E9D7;
   padding: 3rem 1.5rem;
   margin-bottom: 3rem;
 }
@@ -196,26 +212,30 @@
 }
 
 .reviewCard {
-  background: #fff;
-  border-radius: 14px;
-  padding: 1.25rem 1.5rem;
+  background: #FFFCF5;
+  border-radius: 16px;
+  padding: 1.375rem 1.5rem;
   margin: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #E8D5BC;
+  box-shadow:
+    0 1px 3px rgba(61, 46, 34, 0.06),
+    0 6px 18px rgba(61, 46, 34, 0.05);
 }
 
 .reviewQuote {
-  font-size: 0.95rem;
-  color: #334155;
-  line-height: 1.65;
+  font-size: 0.96rem;
+  color: #4A3222;
+  line-height: 1.72;
   margin: 0 0 0.875rem;
+  font-style: italic;
 }
 
 .reviewAuthor {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #94a3b8;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #9A7050;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.09em;
 }
 
 /* ── Map ─────────────────────────────────────────────────────── */
@@ -223,9 +243,10 @@
   width: 100%;
   height: 260px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   display: block;
   margin-bottom: 0.75rem;
+  box-shadow: 0 2px 10px rgba(61, 46, 34, 0.12);
 }
 
 .mapLink {
@@ -240,15 +261,15 @@
 .footer {
   max-width: 680px;
   margin: 0 auto;
-  padding: 1.5rem 1.5rem 3rem;
-  border-top: 1px solid #e2e8f0;
-  color: #64748b;
+  padding: 1.75rem 1.5rem 3rem;
+  border-top: 1.5px solid #E8D5BC;
+  color: #9A7050;
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
-.footerAddress { margin: 0 0 0.4rem; }
-.footerHours   { margin: 0 0 0.25rem; }
+.footerAddress { margin: 0 0 0.4rem; color: #6B4A28; }
+.footerHours   { margin: 0 0 0.25rem; color: #6B4A28; }
 
 .footerLinks {
   display: flex;
@@ -277,11 +298,11 @@
     z-index: 100;
     padding: 0.75rem 1rem;
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-top: 1px solid #e2e8f0;
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+    background: rgba(251, 246, 238, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid #E8D5BC;
+    box-shadow: 0 -4px 20px rgba(61, 46, 34, 0.1);
   }
 
   .stickyBarBtn {
@@ -295,5 +316,6 @@
     font-weight: 700;
     font-size: 1.05rem;
     text-decoration: none;
+    letter-spacing: 0.01em;
   }
 }
