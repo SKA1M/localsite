@@ -11,7 +11,8 @@
     "test": "vitest run",
     "validate-config": "tsx scripts/validate-config.ts",
     "gen:content": "tsx scripts/generate-content.ts",
-    "gen:gbp": "tsx scripts/generate-gbp-pack.ts"
+    "gen:gbp": "tsx scripts/generate-gbp-pack.ts",
+    "gen:from-db": "tsx scripts/generate-from-db.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.65.0",
