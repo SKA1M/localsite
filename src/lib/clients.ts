@@ -6,10 +6,11 @@
 
 import type { ClientConfig } from './types'
 import { beachShackGoa } from '@/content/clients/beach-shack-goa'
+import { seaBreezeShackTest } from '@/content/clients/sea-breeze-shack-test'
 
 const ALL: ClientConfig[] = [
   beachShackGoa,
-  // add new clients here
+  seaBreezeShackTest,
 ]
 
 const BY_SLUG = new Map(ALL.map((c) => [c.slug, c]))
