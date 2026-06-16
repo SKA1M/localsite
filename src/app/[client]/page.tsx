@@ -231,7 +231,7 @@ export default async function LandingPage({
           )}
           {c.instagram && (
             <a
-              href={`https://instagram.com/${c.instagram}`}
+              href={`https://instagram.com/${c.instagram.replace(/^@/, '')}`}
               className={styles.footerLink}
               target="_blank"
               rel="noopener noreferrer"

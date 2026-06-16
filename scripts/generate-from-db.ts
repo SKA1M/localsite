@@ -121,7 +121,7 @@ Next steps:
 function renderConfig(row: ClientRow, sf: SiteFacts, c: GeneratedContent): string {
   const phone = sf.phone ? `  phone: ${j(sf.phone)},\n` : '  // TODO: phone\n'
   const whatsapp = sf.whatsapp ? `  whatsapp: ${j(sf.whatsapp)},\n` : '  // TODO: whatsapp\n'
-  const instagram = sf.instagram ? `  instagram: ${j(sf.instagram)},\n` : ''
+  const instagram = sf.instagram ? `  instagram: ${j(sf.instagram.replace(/^@/, ''))},\n` : ''
   const reviewUrl = row.google_review_url
     ? `  googleReviewUrl: ${j(row.google_review_url)},\n`
     : ''
