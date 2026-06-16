@@ -140,20 +140,24 @@
 }
 
 .menuItem {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: baseline;
-  gap: 0.2rem 1rem;
   padding: 0.875rem 1rem;
   background: #FFF9F0;
   border-radius: 12px;
   border: 1px solid #E8D5BC;
 }
 
+.menuItemRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
 .menuItemName {
   font-weight: 600;
   color: #2C1810;
   font-size: 0.95rem;
+  min-width: 0;
 }
 
 .menuItemPrice {
@@ -161,26 +165,14 @@
   color: var(--accent);
   font-size: 0.95rem;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .menuItemDesc {
-  grid-column: 1 / -1;
   font-size: 0.85rem;
   color: #9A7050;
   line-height: 1.55;
-  margin: 0.25rem 0 0;
-}
-
-.menuLinkBtn {
-  display: inline-block;
-  padding: 0.85rem 1.75rem;
-  border-radius: 999px;
-  border: 2px solid var(--accent);
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 1rem;
-  text-decoration: none;
-  letter-spacing: 0.01em;
+  margin: 0.4rem 0 0;
 }
 
 /* ── Gallery ────────────────────────────────────────────────── */

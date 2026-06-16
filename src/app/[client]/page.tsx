@@ -117,13 +117,11 @@ export default async function LandingPage({
               <ul className={styles.menuItemList}>
                 {cat.items.map((item) => (
                   <li key={item.name} className={styles.menuItem}>
-                    <span className={styles.menuItemName}>{item.name}</span>
-                    {item.price && (
-                      <span className={styles.menuItemPrice}>{item.price}</span>
-                    )}
-                    {item.description && (
-                      <p className={styles.menuItemDesc}>{item.description}</p>
-                    )}
+                    <div className={styles.menuItemRow}>
+                      <span className={styles.menuItemName}>{item.name}</span>
+                      {item.price && <span className={styles.menuItemPrice}>{item.price}</span>}
+                    </div>
+                    {item.description && <p className={styles.menuItemDesc}>{item.description}</p>}
                   </li>
                 ))}
               </ul>
@@ -201,7 +199,7 @@ export default async function LandingPage({
             title={`Map — ${c.name}`}
           />
           <a
-            href={c.mapsUrl ?? `https://www.openstreetmap.org/?mlat=${c.address.lat}&mlon=${c.address.lng}#map=17/${c.address.lat}/${c.address.lng}`}
+            href={c.mapsUrl || `https://www.openstreetmap.org/?mlat=${c.address.lat}&mlon=${c.address.lng}#map=17/${c.address.lat}/${c.address.lng}`}
             className={styles.mapLink}
             target="_blank"
             rel="noopener noreferrer"

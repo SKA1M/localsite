@@ -50,7 +50,7 @@ export function buildLocalBusinessJsonLd(c: ClientConfig, pageUrl: string) {
   }
 
   const sameAs: string[] = []
-  if (c.instagram) sameAs.push(`https://instagram.com/${c.instagram}`)
+  if (c.instagram) sameAs.push(`https://instagram.com/${c.instagram.replace(/^@/, '')}`)
   if (sameAs.length) jsonLd.sameAs = sameAs
 
   return jsonLd
