@@ -16,6 +16,7 @@ import { generateClientContent, j, camel } from './lib/generate-config'
 import type { BusinessFacts, GeneratedContent } from './lib/generate-config'
 
 interface SiteFacts {
+  category?: 'food' | 'stay' | 'other'
   businessType?: string
   tagline?: string
   locality?: string
@@ -27,6 +28,13 @@ interface SiteFacts {
   vibe?: string
   offerings?: string[]
   audience?: string
+  hoursText?: string    // raw string e.g. "Mon–Sat 9am–10pm, Sun closed" — needs manual parsing
+  mapsUrl?: string      // Google Maps / Apple Maps link for "Open in maps" CTA
+  findUsTip?: string    // owner-written directions / landmark tip
+  menuMode?: 'static' | 'linked'
+  menuRaw?: string      // unstructured menu text (static mode) — needs manual parsing
+  menuLinkUrl?: string  // external menu link (linked mode)
+  amenities?: string    // raw amenities text (Stay category) — split into array on render
 }
 
 interface ClientRow {
@@ -68,7 +76,8 @@ async function main() {
   const facts: BusinessFacts = {
     slug: row.slug,
     name: row.name,
-    businessType: sf.businessType ?? 'restaurant',
+    category: sf.category,
+    businessType: sf.businessType ?? (sf.category === 'stay' ? 'hostel' : 'restaurant'),
     locality: sf.locality ?? '',
     region: sf.region ?? '',
     country: sf.country ?? 'India',
@@ -116,6 +125,38 @@ function renderConfig(row: ClientRow, sf: SiteFacts, c: GeneratedContent): strin
   const reviewUrl = row.google_review_url
     ? `  googleReviewUrl: ${j(row.google_review_url)},\n`
     : ''
+  const mapsUrl = sf.mapsUrl ? `  mapsUrl: ${j(sf.mapsUrl)},\n` : ''
+
+  // Inject the owner-written findUsTip as a "How to find us" section,
+  // replacing any similar section the LLM may have drafted.
+  const baseSections = sf.findUsTip
+    ? c.sections.filter((s) => !/find|location|where|getting here/i.test(s.title))
+    : c.sections
+  const sections = sf.findUsTip
+    ? [...baseSections, { title: 'How to find us', body: sf.findUsTip }]
+    : baseSections
+
+  const hoursBlock = sf.hoursText
+    ? `  // TODO: parse hoursText into hours array. Raw value from onboarding:\n  // ${j(sf.hoursText)}\n  // hours: [{ days: 'Mo-Su', opens: '09:00', closes: '22:00' }],\n`
+    : '  // TODO: hours\n'
+
+  // Menu block — three cases based on category + menuMode
+  let menuBlock: string
+  if (sf.category === 'stay') {
+    // Stay businesses don't have a menu; render amenities instead
+    const amenitiesArr = sf.amenities
+      ? sf.amenities.split(/[\n,]/).map((s) => s.trim()).filter(Boolean)
+      : []
+    menuBlock = amenitiesArr.length > 0
+      ? `  amenities: ${JSON.stringify(amenitiesArr)},\n`
+      : '  // TODO: amenities (comma-separated list of what\'s included)\n'
+  } else if (sf.menuMode === 'linked' && sf.menuLinkUrl) {
+    menuBlock = `  menuLinkUrl: ${j(sf.menuLinkUrl)},\n`
+  } else if (sf.menuRaw) {
+    menuBlock = `  // TODO: parse menuRaw into structured menu array. Raw value from onboarding:\n  // ${j(sf.menuRaw)}\n  // menu: [{ category: '...', items: [{ name: '...', price: '...' }] }],\n`
+  } else {
+    menuBlock = '  // TODO: menu (optional — add structured menu array or menuLinkUrl)\n'
+  }
 
   return `// src/content/clients/${row.slug}.ts  — REVIEW & EDIT before shipping
 import type { ClientConfig } from '@/lib/types'
@@ -123,21 +164,30 @@ import type { ClientConfig } from '@/lib/types'
 export const ${camel(row.slug)}: ClientConfig = {
   slug: ${j(row.slug)},
   name: ${j(row.name)},
-  businessType: ${j(sf.businessType ?? 'restaurant')} as ClientConfig['businessType'],
+  businessType: ${j(sf.category === 'stay' ? 'LodgingBusiness' : sf.category === 'food' ? 'Restaurant' : 'LocalBusiness')} as ClientConfig['businessType'],
   tagline: ${j(c.heroHeadline)},
   locality: ${j(sf.locality ?? '')},
   region: ${j(sf.region ?? '')},
   country: ${j(sf.country ?? 'India')},
-${phone}${whatsapp}${instagram}${reviewUrl}  // TODO: address, hours, priceRange, ogImage
+${phone}${whatsapp}${instagram}${reviewUrl}${mapsUrl}  // TODO: address, priceRange
+${hoursBlock}
   hero: {
     headline: ${j(c.heroHeadline)},
     subhead: ${j(c.heroSubhead)},
   },
-  sections: ${JSON.stringify(c.sections, null, 2)},
+  sections: ${JSON.stringify(sections, null, 2)},
   highlights: ${JSON.stringify(c.highlights)},
+${menuBlock}
+  // TODO: gallery — add absolute image URLs once photos are ready
+  // gallery: [],
+
+  // TODO: reviewQuotes — add owner-supplied testimonials if available
+  // reviewQuotes: [{ quote: '...', author: '...' }],
+
   seo: {
     title: ${j(c.seoTitle)},
     description: ${j(c.seoDescription)},
+    // TODO: ogImage — add absolute URL once a hero photo is ready
   },
 }
 `

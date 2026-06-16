@@ -4,6 +4,8 @@ export interface BusinessFacts {
   slug: string
   name: string
   businessType: string
+  /** Broad category bucket — informs copy tone ('food' | 'stay' | 'other'). */
+  category?: string
   locality: string
   region: string
   country: string

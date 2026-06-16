@@ -171,6 +171,18 @@
   margin: 0.25rem 0 0;
 }
 
+.menuLinkBtn {
+  display: inline-block;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
 /* ── Gallery ────────────────────────────────────────────────── */
 .galleryGrid {
   display: grid;
@@ -256,6 +268,23 @@
   text-decoration: none;
 }
 .mapLink:hover { text-decoration: underline; }
+
+/* ── Menu link button (linked-menu mode) ────────────────────── */
+.menuLinkBtn {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 0.75rem 1.75rem;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  transition: background 0.15s, color 0.15s;
+}
+.menuLinkBtn:hover {
+  background: var(--accent);
+  color: #fff;
+}
 
 /* ── Footer ──────────────────────────────────────────────────── */
 .footer {

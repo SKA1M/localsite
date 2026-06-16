@@ -58,6 +58,8 @@ export interface ClientConfig {
   hours?: BusinessHours[]
   /** "$", "$$", "$$$" — schema.org priceRange. */
   priceRange?: string
+  /** Link shown as "Open in maps ↗" — Google Maps, Apple Maps, etc. Overrides the auto-generated OSM link. */
+  mapsUrl?: string
 
   // ----- Content (hand-written OR produced by scripts/generate-content.ts) -----
   hero: {
@@ -78,6 +80,16 @@ export interface ClientConfig {
       description?: string
     }>
   }>
+
+  /**
+   * URL to an external menu (Instagram post, PDF, website).
+   * When set, the page renders a "View our current menu →" link instead of an inline menu.
+   * Set either this or `menu`, not both.
+   */
+  menuLinkUrl?: string
+
+  /** Amenities list for Stay-category businesses (hostels, guesthouses, etc.). */
+  amenities?: string[]
 
   /** Absolute image URLs rendered as a responsive grid. */
   gallery?: string[]

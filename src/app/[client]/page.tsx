@@ -92,8 +92,23 @@ export default async function LandingPage({
         </section>
       )}
 
-      {/* ── Menu ──────────────────────────────────────────── */}
-      {c.menu && c.menu.length > 0 && (
+      {/* ── Menu (linked) ────────────────────────────────── */}
+      {c.menuLinkUrl && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Menu</h2>
+          <a
+            href={c.menuLinkUrl}
+            className={styles.menuLinkBtn}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View our current menu →
+          </a>
+        </section>
+      )}
+
+      {/* ── Menu (structured) ────────────────────────────── */}
+      {!c.menuLinkUrl && c.menu && c.menu.length > 0 && (
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Menu</h2>
           {c.menu.map((cat) => (
@@ -114,6 +129,18 @@ export default async function LandingPage({
               </ul>
             </div>
           ))}
+        </section>
+      )}
+
+      {/* ── Amenities (Stay category) ─────────────────────── */}
+      {c.amenities && c.amenities.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>What&apos;s included</h2>
+          <ul className={styles.chipList}>
+            {c.amenities.map((a) => (
+              <li key={a} className={styles.chip}>{a}</li>
+            ))}
+          </ul>
         </section>
       )}
 
@@ -174,7 +201,7 @@ export default async function LandingPage({
             title={`Map — ${c.name}`}
           />
           <a
-            href={`https://www.openstreetmap.org/?mlat=${c.address.lat}&mlon=${c.address.lng}#map=17/${c.address.lat}/${c.address.lng}`}
+            href={c.mapsUrl ?? `https://www.openstreetmap.org/?mlat=${c.address.lat}&mlon=${c.address.lng}#map=17/${c.address.lat}/${c.address.lng}`}
             className={styles.mapLink}
             target="_blank"
             rel="noopener noreferrer"
